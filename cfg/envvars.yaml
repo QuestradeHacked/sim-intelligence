@@ -1,0 +1,50 @@
+environment_variables:
+  ASPNETCORE_ENVIRONMENT: $(ENV)
+  ASPNETCORE_URLS: "http://*:8080"
+
+  Serilog__MinimumLevel: "Information"
+
+  DataDog__StatsD__HostName: $(DD_AGENT_HOST)
+  DataDog__StatsD__Prefix: fincrime.identity_intelligence
+  DataDog__StatsD__IsEnabled: true
+  DD_LOG_LEVEL: debug
+
+  # Global log configuration
+  Logging__IncludeScopes: "true"
+  Serilog__MinimumLevel__Default: "Information"
+
+  # Microsoft log level overrides
+  Serilog__MinimumLevel__Override__System: "Warning"
+  Serilog__MinimumLevel__Override__Microsoft: "Warning"
+  Serilog__MinimumLevel__Override__Microsoft.Hosting.Lifetime: "Warning"
+  Serilog__MinimumLevel__Override__Microsoft.AspNetCore: "Warning"
+  Serilog__MinimumLevel__Override__Microsoft.AspNetCore.Mvc: "Warning"
+  Serilog__MinimumLevel__Override__Microsoft.AspNetCore.Authentication: "Warning"
+  Serilog__MinimumLevel__Override__Microsoft.AspNetCore.Identity: "Warning"
+  Serilog__MinimumLevel__Override__Microsoft.AspNetCore.Session.SessionMiddleware: "Error"
+
+  # Serilog sinks (outputs) and configuration
+  Serilog__WriteTo__0__Name: "Console"
+  Serilog__WriteTo__0__Args__formatter: "Serilog.Formatting.Json.JsonFormatter"
+
+  # Serilog log enriching - to be reviewed with Production Support on what is useful and what can be dropped
+  Serilog__Enrich__0: "FromLogContext"
+  Serilog__Enrich__1: "WithMachineName"
+  Serilog__Enrich__2: "WithThreadId"
+  Serilog__Enrich__3: "WithExceptionDetails"
+
+  # Twilio
+  IdentityIntelligence__TwilioConfiguration__Fields: "caller_name,line_type_intelligence,sim_swap,identity_match"
+  IdentityIntelligence__TwilioConfiguration__Enable: true
+  IdentityIntelligence__TwilioConfiguration__Retry: 1
+
+  # Identity Intelligence Subscriber
+  IdentityIntelligence__IdentityIntelligenceSubscriberConfiguration__Enable: true
+  IdentityIntelligence__IdentityIntelligenceSubscriberConfiguration__ProjectId: $(PROJECT)
+  IdentityIntelligence__IdentityIntelligenceSubscriberConfiguration__SubscriptionId: system.financial-crime.internal-identity.scan-1.0.$(ENV).fc-identity-intelligence
+
+  # Identity Intelligence Publisher
+  IdentityIntelligence__IdentityIntelligenceResultPublisherConfiguration__Enable: true
+  IdentityIntelligence__IdentityIntelligenceResultPublisherConfiguration__MaximumMessagePublishAttempts: 10
+  IdentityIntelligence__IdentityIntelligenceResultPublisherConfiguration__ProjectId: $(PROJECT)
+  IdentityIntelligence__IdentityIntelligenceResultPublisherConfiguration__TopicId: system.financial-crime.internal-scan-result-status.updated-1.0.$(ENV)

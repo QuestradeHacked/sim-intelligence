@@ -1,0 +1,32 @@
+service_name: fc-identity-intelligence
+stack: dotnetcore
+owner: tmj
+
+notification_channels:
+  - customer-lifecycle-devops
+
+notification_emails:
+  - "questrade-scrumteam-tmj@questrade.com"
+
+release_managers:
+  users:
+    - dmohan@questrade.com
+    - igtanure@questrade.com
+    - jhasse@questrade.com
+    - lrogerio@questrade.com
+    - spotasio@questrade.com
+    - wantunes@questrade.com
+
+business_line:
+  name: enterprise
+  product: financial-crime
+  domain: financial-crime
+
+pubsubs_to_subscribe:
+  - name: system.financial-crime.internal-identity.scan-1.0
+    retryPolicy:
+      maximumBackoff: 60s
+      minimumBackoff: 3s
+
+pubsubs_to_publish:
+  - system.financial-crime.internal-scan-result-status.updated-1.0

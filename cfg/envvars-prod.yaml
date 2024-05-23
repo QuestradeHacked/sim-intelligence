@@ -1,0 +1,9 @@
+environment_variables:
+
+  #Twilio
+  IdentityIntelligence__TwilioConfiguration__Retry: 3
+
+  # PubSub
+  IdentityIntelligence__IdentityIntelligenceSubscriberConfiguration__SubscriptionId: system.financial-crime.internal-identity.scan-1.0.fc-identity-intelligence
+
+  IdentityIntelligence__IdentityIntelligenceResultPublisherConfiguration__TopicId: system.financial-crime.internal-scan-result-status.updated-1.0
